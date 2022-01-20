@@ -1,5 +1,7 @@
 
 import { _decorator, Component, Node } from 'cc';
+import { bulletGroup } from './bulletGroup';
+import { enemyGroup } from './enemyGroup';
 import { Hero } from './hero';
 const { ccclass, property } = _decorator;
 
@@ -27,8 +29,16 @@ export class Main extends Component {
     @property({ type: Hero })
     public hero: Hero | null = null;
 
+    @property({ type: enemyGroup })
+    public enemyGroup: enemyGroup | null = null;
+
+    @property({ type: bulletGroup })
+    public bulletGroup: bulletGroup | null = null;
+
     start() {
         // [3]
+        this.enemyGroup.startAction();
+        this.bulletGroup.startAction();
     }
 
     // update (deltaTime: number) {

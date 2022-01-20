@@ -49,12 +49,9 @@ export class Hero extends Component {
 
     handleTouchMove(event: EventTouch) {
         const position = event.getLocation();
-        console.log(position);
         // 获取父元素的uiTransform
         const uiTransform = this.node.parent.getComponent(UITransform);
-        console.log(uiTransform);
         const location = uiTransform.convertToNodeSpaceAR(new Vec3(position.x, position.y, 0));
-        console.log(location);
         this.node.setPosition(location);
     }
     // update (deltaTime: number) {

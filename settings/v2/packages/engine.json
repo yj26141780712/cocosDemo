@@ -87,6 +87,9 @@
       },
       "dragon-bones": {
         "_value": true
+      },
+      "marionette": {
+        "_value": true
       }
     },
     "includeModules": [
@@ -111,6 +114,7 @@
     "noDeprecatedFeatures": {
       "value": false,
       "version": ""
-    }
+    },
+    "flags": {}
   }
 }

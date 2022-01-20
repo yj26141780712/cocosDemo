@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "infiniteBullet",
+    "_name": "enemy1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -79,8 +79,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 9,
-      "height": 21
+      "width": 51,
+      "height": 39
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -91,7 +91,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "5bP0XcZwtI0p4nMDss7XIc"
+    "fileId": "8f2KKKfuBPbpW12nI/+XYD"
   },
   {
     "__type__": "cc.Sprite",
@@ -116,7 +116,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "543e2044-f481-4182-91a0-2390deb3f05d@96233",
+      "__uuid__": "543e2044-f481-4182-91a0-2390deb3f05d@eb09c",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -139,10 +139,10 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "c1+Vxcu0dB25RfWXmvPi9s"
+    "fileId": "b0z9Ou2lBFK7dzuV69F8KL"
   },
   {
-    "__type__": "e2a099zfPZM77kJiZ0Qcesy",
+    "__type__": "c210718tKNGm6m27MchmWMS",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -152,12 +152,15 @@
     "__prefab": {
       "__id__": 7
     },
-    "speed": 1500,
+    "score": 5,
+    "HP": 1,
+    "speedMax": 200,
+    "speedMin": 100,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "6926dzWXlJWIucughKKY3d"
+    "fileId": "7c3AxrHQJIGpHOALZKrvYK"
   },
   {
     "__type__": "cc.BoxCollider2D",
@@ -183,14 +186,14 @@
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 9,
-      "height": 21
+      "width": 51,
+      "height": 39
     },
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "28UBM7jVZJqoRQBUDbHHn2"
+    "fileId": "aftWkuc4VPx7nprDZzvw72"
   },
   {
     "__type__": "cc.RigidBody2D",
@@ -203,11 +206,11 @@
     "__prefab": {
       "__id__": 11
     },
-    "enabledContactListener": false,
+    "enabledContactListener": true,
     "bullet": false,
     "awakeOnLoad": true,
     "_group": 1,
-    "_type": 0,
+    "_type": 1,
     "_allowSleep": true,
     "_gravityScale": 1,
     "_linearDamping": 0,
@@ -223,7 +226,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "87y5sYKQFJ5aq/zuBfBJl7"
+    "fileId": "e55BBvqS9DLLR74vWnCHRq"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -233,6 +236,6 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "535Va2HwBHEpyIt7CzDOxU"
+    "fileId": "c46/YsCPVOJYA4mWEpNYRx"
   }
 ]
