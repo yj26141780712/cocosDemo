@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, Prefab, instantiate, Vec3, UITransform, NodePool } from 'cc';
+import { bullet } from './bullet';
 import { common } from './common';
 import { finiteBullet, infiniteBullet } from './core';
 import { Hero } from './hero';
@@ -68,6 +69,8 @@ export class bulletGroup extends Component {
         infiniteBullet.position.forEach(p => {
             let pool = this.common.getNodePool(infiniteBullet.name);
             const node = this.common.createNewNode(pool, infiniteBullet.prefab, this.node);
+            const bullet = <bullet>node.getComponent('bullet');
+            bullet.bulletGroup = this;
             const position = this.getBulletPosition(p.positionX);
             node.setPosition(position);
         });

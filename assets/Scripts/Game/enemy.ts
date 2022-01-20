@@ -1,5 +1,6 @@
 
-import { _decorator, Component, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D } from 'cc';
+import { _decorator, Component, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, UITransform } from 'cc';
+import { enemyGroup } from './enemyGroup';
 const { ccclass, property } = _decorator;
 
 /**
@@ -36,6 +37,8 @@ export class enemy extends Component {
     @property({ tooltip: '最小速度' })
     public speedMin: number = 0;
 
+    public enemyGroup: enemyGroup;
+
 
     start() {
         // [3]
@@ -45,19 +48,31 @@ export class enemy extends Component {
             console.log('开启碰撞监听');
             collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         }
+        console.log(this.node.parent);
     }
 
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
         // 只在两个碰撞体开始接触时被调用一次
-        console.log('onBeginContact');
-        console.log(selfCollider.body);
-        console.log(otherCollider.body);
+       //console.log('onBeginContact');
+       //console.log(otherCollider.node.parent.name);
+        if(otherCollider.node.parent&&otherCollider.node.parent.name==='bulletGroup'){
+            console.log('子弹碰撞敌机 敌机爆炸');
+            this.enemyGroup.destoryNode(selfCollider.node);
+        }
     }
+
     update(deltaTime: number) {
         const position = this.node.getPosition()
         position.y -= deltaTime * this.speed;
         this.node.setPosition(position);
+        const uit = this.node.parent.parent.getComponent(UITransform);
+        if(position.y<-uit.height/2){
+            //console.log(uit.height);
+           this.enemyGroup.destoryNode(this.node);
+        }
     }
+
+
 }
 
 /**

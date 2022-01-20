@@ -1,7 +1,8 @@
 
 import { _decorator, Component, Node, NodePool, Prefab, UITransform, Vec3, randomRange } from 'cc';
 import { common } from './common';
-import { enemyG, enemyNodePool } from './core';
+import { enemyG } from './core';
+import { enemy } from './enemy';
 const { ccclass, property } = _decorator;
 
 /**
@@ -45,6 +46,8 @@ export class enemyGroup extends Component {
     genereateEnemy = (enemyG: enemyG) => {
         let pool = this.common.getNodePool(enemyG.name);
         let newNode = this.common.createNewNode(pool, enemyG.prefab, this.node);
+        const enemy = <enemy>newNode.getComponent('enemy');
+        enemy.enemyGroup = this;
         let position = this.getNewEnemyPositon(newNode);
         newNode.setPosition(position);
     }
@@ -56,6 +59,12 @@ export class enemyGroup extends Component {
         let randx = randomRange(-1, 1) * (parentUT.width / 2 - nodeUT.width / 2);
         let randy = nodeUT.height / 2 + parentUT.height / 2;
         return new Vec3(randx, randy, 0);
+    }
+
+    destoryNode(node:Node){
+        console.log(node.name);
+        const pool = this.common.getNodePool(node.name);
+        this.common.destoryNode(pool,node);
     }
 
     // update (deltaTime: number) {

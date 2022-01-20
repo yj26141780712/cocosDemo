@@ -1,6 +1,6 @@
 
 import { _decorator, Component, Node, NodePool, instantiate, Prefab } from 'cc';
-import { enemyG, enemyNodePool, finiteBullet, infiniteBullet } from './core';
+import { enemyG, finiteBullet, infiniteBullet } from './core';
 const { ccclass, property } = _decorator;
 
 /**
@@ -64,10 +64,15 @@ export class common extends Component {
         if (nodePool.size() > 0) {
             newNode = nodePool.get();
         } else {
+            console.log('对象池子，' + nodePool.size());
             newNode = instantiate(prefab);
         }
         parent.addChild(newNode);
         return newNode;
+    }
+
+    destoryNode =(nodePool:NodePool,node:Node)=>{
+        nodePool.put(node);
     }
 }
 
