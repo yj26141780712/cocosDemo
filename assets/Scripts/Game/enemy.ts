@@ -1,6 +1,5 @@
 
-import { _decorator, Component, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, UITransform } from 'cc';
-import { enemyGroup } from './enemyGroup';
+import { _decorator, Component, Collider2D, Contact2DType, IPhysics2DContact, Animation, UITransform, Sprite, SpriteFrame } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
@@ -37,28 +36,52 @@ export class enemy extends Component {
     @property({ tooltip: '最小速度' })
     public speedMin: number = 0;
 
-    public enemyGroup: enemyGroup;
+    @property({ type: Animation })
+    public enemyAnimation: Animation | null = null;
 
+    @property({ type: SpriteFrame })
+    public initSpriteFrame: SpriteFrame | null = null;
+
+    public enemyGroup: any;
+
+    enemyHp = 0;
 
     start() {
         // [3]
         this.speed = Math.random() * (this.speedMax - this.speedMin + 1) + this.speedMin;
         let collider = this.getComponent(Collider2D);
         if (collider) {
-            console.log('开启碰撞监听');
             collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         }
-        console.log(this.node.parent);
+    }
+
+    initEnemy() {
+        this.enemyHp = this.HP;
+        // 找到node的Sprite组件
+        let nSprite = this.node.getComponent(Sprite);
+        // 初始化spriteFrame
+        if (nSprite.spriteFrame != this.initSpriteFrame) {
+            nSprite.spriteFrame = this.initSpriteFrame;
+        }
     }
 
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
         // 只在两个碰撞体开始接触时被调用一次
-       //console.log('onBeginContact');
-       //console.log(otherCollider.node.parent.name);
-        if(otherCollider.node.parent&&otherCollider.node.parent.name==='bulletGroup'){
-            console.log('子弹碰撞敌机 敌机爆炸');
-            this.enemyGroup.destoryNode(selfCollider.node);
+        if (otherCollider.node.parent && otherCollider.node.parent.name === 'bulletGroup') {
+            // this.enemyGroup.destoryNode(this.node);
+            if (this.enemyHp === 0) {
+                this.enemyHp--;
+                this.explodingAnim();
+            }
+            if (this.enemyHp > 0) {
+                this.enemyHp--;
+            }
         }
+    }
+
+    explodingAnim() {
+        this.enemyAnimation.play();
+        this.enemyAnimation.on(Animation.EventType.FINISHED, this.onHandleDestroy, this);
     }
 
     update(deltaTime: number) {
@@ -66,12 +89,13 @@ export class enemy extends Component {
         position.y -= deltaTime * this.speed;
         this.node.setPosition(position);
         const uit = this.node.parent.parent.getComponent(UITransform);
-        if(position.y<-uit.height/2){
-            //console.log(uit.height);
-           this.enemyGroup.destoryNode(this.node);
+        if (position.y < -uit.height / 2) {
+            this.enemyGroup.destoryNode(this.node);
         }
     }
-
+    onHandleDestroy() {
+        this.enemyGroup.destoryNode(this.node);
+    }
 
 }
 

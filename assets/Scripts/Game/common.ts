@@ -34,6 +34,7 @@ export class common extends Component {
     batchInitNodePool(objs: NodePoolObjs) {
         objs.forEach((obj: NodePoolObj) => {
             this.setNodePool(obj.name);
+            console.log(this.pools);
             this.initNodePool(this.getNodePool(obj.name), obj);
         });
     }
@@ -64,15 +65,21 @@ export class common extends Component {
         if (nodePool.size() > 0) {
             newNode = nodePool.get();
         } else {
-            console.log('对象池子，' + nodePool.size());
             newNode = instantiate(prefab);
         }
         parent.addChild(newNode);
         return newNode;
     }
 
-    destoryNode =(nodePool:NodePool,node:Node)=>{
+    destoryNode = (nodePool: NodePool, node: Node) => {
         nodePool.put(node);
+    }
+
+    clearPools() {
+        for (const key in this.pools) {
+            const pool = this.pools[key];
+            pool.clear();
+        }
     }
 }
 

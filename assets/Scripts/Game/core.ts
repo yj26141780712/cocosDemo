@@ -15,7 +15,7 @@ export class enemyG {
 @ccclass('bulletPosition')
 class bulletPosition {
     @property({ tooltip: '子弹相对Hero的位置' })
-    public positionX = '';
+    public positionX: number = 0;
 }
 
 @ccclass('infiniteBullet')
@@ -41,5 +41,21 @@ export class finiteBullet extends infiniteBullet {
     ufoBulletName = '';
 }
 
+
+@ccclass('ufoG')
+export class ufoG {
+    @property({})
+    public name: string = '';
+    @property({ type: Prefab, tooltip: 'ufo预制' })
+    public prefab: Prefab = null;
+    @property({ tooltip: '敌机频率' })
+    public freq = 0;
+    @property({ tooltip: '敌机池数量' })
+    public poolAmount = 0;
+    @property({ tooltip: '最大延时' })
+    public delayMax: number = 0;
+    @property({ tooltip: '最小延时' })
+    public delayMin: number = 0;
+}
 
 

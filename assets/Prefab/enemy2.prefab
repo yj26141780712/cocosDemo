@@ -29,14 +29,17 @@
         "__id__": 6
       },
       {
+        "__id__": 10
+      },
+      {
         "__id__": 8
       },
       {
-        "__id__": 10
+        "__id__": 12
       }
     ],
     "_prefab": {
-      "__id__": 12
+      "__id__": 14
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -80,7 +83,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 69,
-      "height": 89
+      "height": 95
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -116,7 +119,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "543e2044-f481-4182-91a0-2390deb3f05d@a7a30",
+      "__uuid__": "543e2044-f481-4182-91a0-2390deb3f05d@8fb0f",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -156,11 +159,46 @@
     "HP": 5,
     "speedMax": 150,
     "speedMin": 100,
+    "enemyAnimation": {
+      "__id__": 8
+    },
+    "initSpriteFrame": {
+      "__uuid__": "543e2044-f481-4182-91a0-2390deb3f05d@8fb0f",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "b4FpYmCnZE4oOZrHygDQqF"
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 9
+    },
+    "playOnLoad": false,
+    "_clips": [
+      {
+        "__uuid__": "374419bc-3f61-472d-82c6-6a9beb0b9d90",
+        "__expectedType__": "cc.AnimationClip"
+      }
+    ],
+    "_defaultClip": {
+      "__uuid__": "374419bc-3f61-472d-82c6-6a9beb0b9d90",
+      "__expectedType__": "cc.AnimationClip"
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "e64ZUKNIBEu58t3tYyNq8a"
   },
   {
     "__type__": "cc.BoxCollider2D",
@@ -171,7 +209,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 9
+      "__id__": 11
     },
     "tag": 0,
     "_group": 1,
@@ -204,7 +242,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 11
+      "__id__": 13
     },
     "enabledContactListener": true,
     "bullet": false,
@@ -226,7 +264,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "fckxN571VLTJ3ggvZ7VvRC"
+    "fileId": "71aP621RFCFp8fifYYOd6c"
   },
   {
     "__type__": "cc.PrefabInfo",

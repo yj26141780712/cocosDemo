@@ -3,6 +3,7 @@ import { _decorator, Component, Node } from 'cc';
 import { bulletGroup } from './bulletGroup';
 import { enemyGroup } from './enemyGroup';
 import { Hero } from './hero';
+import { ufoGroup } from './ufoGroup';
 const { ccclass, property } = _decorator;
 
 /**
@@ -35,10 +36,14 @@ export class Main extends Component {
     @property({ type: bulletGroup })
     public bulletGroup: bulletGroup | null = null;
 
+    @property({ type: ufoGroup })
+    public ufoGroup: ufoGroup | null = null;
+
     start() {
         // [3]
         this.enemyGroup.startAction();
         this.bulletGroup.startAction();
+        this.ufoGroup.startAction();
     }
 
     // update (deltaTime: number) {

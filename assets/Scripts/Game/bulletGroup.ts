@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, instantiate, Vec3, UITransform, NodePool } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, Vec3, UITransform, NodePool, macro } from 'cc';
 import { bullet } from './bullet';
 import { common } from './common';
 import { finiteBullet, infiniteBullet } from './core';
@@ -34,7 +34,7 @@ export class bulletGroup extends Component {
     public infiniteBullet: infiniteBullet = null;
 
     @property({ type: finiteBullet, tooltip: '无限子弹' })
-    public finiteBullets: finiteBullet[] = [];
+    public finiteBullet: finiteBullet[] = [];
 
     @property({ type: Hero })
     public hero: Hero | null = null;
@@ -50,22 +50,24 @@ export class bulletGroup extends Component {
         // 初始化子弹池
         this.common.setNodePool(this.infiniteBullet.name);
         this.common.initNodePool(this.common.getNodePool(this.infiniteBullet.name), this.infiniteBullet);
-        this.common.batchInitNodePool(this.finiteBullets);
+        this.common.batchInitNodePool(this.finiteBullet);
     }
 
     // 发射子弹 定时器
     startAction() {
-        console.log('发射子弹！');
-        const startShoot = () => {
-            this.generateNewBullet(this.infiniteBullet);
-        }
-        this.schedule(startShoot, this.infiniteBullet.rate);
+        this.schedule(this.startShoot, this.infiniteBullet.rate);
     }
 
+    startShoot = () => {
+        this.generateNewBullet(this.infiniteBullet);
+    }
 
+    startDoubleShoot = (i: number) => {
+        this.generateNewBullet(this.finiteBullet[i]);
+    }
 
     //生成新子弹
-    generateNewBullet(infiniteBullet: infiniteBullet) {
+    generateNewBullet(infiniteBullet: infiniteBullet | finiteBullet) {
         infiniteBullet.position.forEach(p => {
             let pool = this.common.getNodePool(infiniteBullet.name);
             const node = this.common.createNewNode(pool, infiniteBullet.prefab, this.node);
@@ -77,16 +79,29 @@ export class bulletGroup extends Component {
     }
 
     // 获取子弹相对位置
-    getBulletPosition(positionStr: string) {
+    getBulletPosition(positionX: number) {
         let heroP = this.hero.node.getPosition();
-        let newV2_x = heroP.x + eval(positionStr);
+        let newV2_x = heroP.x + Number(positionX);
         let newV2_y = heroP.y;
         return new Vec3(newV2_x, newV2_y, 0);
     }
 
     // 更换子弹
-    changeBullte() {
+    changeBullte(bulletName: string) {
+        this.unschedule(this.startShoot);
+        for (let i = 0; i < this.finiteBullet.length; i++) {
+            if (this.finiteBullet[i].ufoBulletName === bulletName) {
+                // 设置一个延时，当一个定时器走完之后，另一个延时结束，开始执行
+                this.schedule(this.startDoubleShoot.bind(this, i), this.finiteBullet[i].rate, this.finiteBullet[i].duration);
+                let delay = this.finiteBullet[i].rate * this.finiteBullet[i].duration;
+                this.schedule(this.startShoot, this.infiniteBullet.rate, macro.REPEAT_FOREVER, delay);
+            }
+        }
+    }
 
+    destoryNode(node: Node) {
+        const pool = this.common.getNodePool(node.name);
+        this.common.destoryNode(pool, node);
     }
 
     // update (deltaTime: number) {

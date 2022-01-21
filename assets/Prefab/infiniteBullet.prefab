@@ -152,7 +152,7 @@
     "__prefab": {
       "__id__": 7
     },
-    "speed": 1500,
+    "speed": 2000,
     "_id": ""
   },
   {
@@ -203,7 +203,7 @@
     "__prefab": {
       "__id__": 11
     },
-    "enabledContactListener": false,
+    "enabledContactListener": true,
     "bullet": false,
     "awakeOnLoad": true,
     "_group": 1,
@@ -223,7 +223,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "87y5sYKQFJ5aq/zuBfBJl7"
+    "fileId": "c9vP9z8eFNXZ1ujq+AlqZO"
   },
   {
     "__type__": "cc.PrefabInfo",

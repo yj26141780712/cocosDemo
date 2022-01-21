@@ -13,7 +13,7 @@ const { ccclass, property } = _decorator;
  * ManualUrl = https://docs.cocos.com/creator/3.4/manual/zh/
  *
  */
- 
+
 @ccclass('End')
 export class End extends Component {
     // [1]
@@ -23,9 +23,11 @@ export class End extends Component {
     // @property
     // serializableDummy = 0;
 
-    start () {
+    start() {
         // [3]
     }
+
+
 
     // update (deltaTime: number) {
     //     // [4]

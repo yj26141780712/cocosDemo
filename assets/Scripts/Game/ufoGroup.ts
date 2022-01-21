@@ -1,58 +1,58 @@
 
-import { _decorator, Component, Node, NodePool, Prefab, UITransform, Vec3, randomRange } from 'cc';
+import { _decorator, Component, Node, UITransform, randomRange, Vec3 } from 'cc';
 import { common } from './common';
-import { enemyG } from './core';
-import { enemy } from './enemy';
+import { ufoG } from './core';
+import { ufo } from './ufo';
 const { ccclass, property } = _decorator;
 
 /**
  * Predefined variables
- * Name = enemyGroup
- * DateTime = Thu Jan 20 2022 08:10:27 GMT+0800 (中国标准时间)
+ * Name = ufoGroup
+ * DateTime = Fri Jan 21 2022 14:25:43 GMT+0800 (中国标准时间)
  * Author = yj261417807
- * FileBasename = enemyGroup.ts
- * FileBasenameNoExtension = enemyGroup
- * URL = db://assets/Scripts/Game/enemyGroup.ts
+ * FileBasename = ufoGroup.ts
+ * FileBasenameNoExtension = ufoGroup
+ * URL = db://assets/Scripts/Game/ufoGroup.ts
  * ManualUrl = https://docs.cocos.com/creator/3.4/manual/zh/
  *
  */
 
-
-
-
-@ccclass('enemyGroup')
-export class enemyGroup extends Component {
+@ccclass('ufoGroup')
+export class ufoGroup extends Component {
     // [1]
     // dummy = '';
 
-    @property({ type: enemyG })
-    enemyGroup: enemyG[] = [];
+    // [2]
+    // @property
+    // serializableDummy = 0;
+    @property({ type: ufoG })
+    public ufoGroup: ufoG[] | null = [];
 
     @property({ type: common })
     public common: common | null = null;
 
-    count = 0;
-
     start() {
-        console.log('开始加载敌人');
-        this.common.batchInitNodePool(this.enemyGroup);
+        this.common.batchInitNodePool(this.ufoGroup);
     }
 
     startAction() {
-        // 每组敌机都需要设置定时器
-        this.enemyGroup.forEach((enemyG) => {
-            this.schedule(this.genereateEnemy.bind(this, enemyG), enemyG.freq);
+        console.log(this.ufoGroup);;
+        this.ufoGroup.forEach((ufoG) => {
+            this.schedule(this.genereateEnemy.bind(this, ufoG), ufoG.freq);
         });
     }
 
-    genereateEnemy = (enemyG: enemyG) => {
-        let pool = this.common.getNodePool(enemyG.name);
-        let newNode = this.common.createNewNode(pool, enemyG.prefab, this.node);
-        const enemy = <enemy>newNode.getComponent('enemy');
-        enemy.enemyGroup = this;
-        enemy.initEnemy();
-        let position = this.getNewEnemyPositon(newNode);
-        newNode.setPosition(position);
+    genereateEnemy = (ufoG: ufoG) => {
+        let delay = Math.random() * (ufoG.delayMax - ufoG.delayMin) + ufoG.delayMin;
+        // 内存定时器，随机掉落时间
+        this.scheduleOnce(() => {
+            let pool = this.common.getNodePool(ufoG.name);
+            let newNode = this.common.createNewNode(pool, ufoG.prefab, this.node);
+            const ufo = <ufo>newNode.getComponent('ufo');
+            ufo.ufoGroup = this;
+            let position = this.getNewEnemyPositon(newNode);
+            newNode.setPosition(position);
+        }, delay);
     }
 
     getNewEnemyPositon(node: Node) {
