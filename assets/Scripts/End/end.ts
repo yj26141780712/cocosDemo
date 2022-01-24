@@ -1,6 +1,7 @@
 
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Node, director, Label } from 'cc';
 const { ccclass, property } = _decorator;
+import global from '../Game/global';
 
 /**
  * Predefined variables
@@ -22,12 +23,25 @@ export class End extends Component {
     // [2]
     // @property
     // serializableDummy = 0;
+    @property({ type: Label })
+    public score: Label | null = null;
 
     start() {
         // [3]
+        this.score.string = global.score.toString();
     }
 
+    restart() {
+        director.loadScene('Game');
+    }
 
+    history() {
+        console.log('历史成绩！');
+    }
+
+    quit() {
+        director.loadScene('Start');
+    }
 
     // update (deltaTime: number) {
     //     // [4]

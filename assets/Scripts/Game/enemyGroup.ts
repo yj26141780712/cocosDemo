@@ -64,9 +64,12 @@ export class enemyGroup extends Component {
         return new Vec3(randx, randy, 0);
     }
 
-    destoryNode(node: Node) {
+    destoryNode(node: Node, score: number) {
         const pool = this.common.getNodePool(node.name);
         this.common.destoryNode(pool, node);
+        if (score) {
+            this.node.emit('changeScore', score);
+        }
     }
 
     // update (deltaTime: number) {

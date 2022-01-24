@@ -25,7 +25,10 @@ export class common extends Component {
     // [2]
     // @property
     // serializableDummy = 0;
+
     public pools = {};
+    public score = 0;
+    public bombAmount = 0;
 
     start() {
         // [3]

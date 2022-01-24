@@ -37,7 +37,10 @@ export class bullet extends Component {
     }
 
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
-        // console.log('子弹碰撞！');
+        // 子弹碰到
+        if (otherCollider.node.parent && otherCollider.node.parent.name === 'ufoGroup') {
+            return;
+        }
         new Promise((resolve) => {
             resolve(1);
         }).then(() => {

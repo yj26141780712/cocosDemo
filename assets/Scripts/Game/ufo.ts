@@ -44,6 +44,7 @@ export class ufo extends Component {
     }
 
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        console.log(123);
         if (otherCollider.node.name === 'hero') {
             new Promise((resolve) => {
                 resolve(1);

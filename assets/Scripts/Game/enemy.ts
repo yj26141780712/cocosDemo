@@ -94,7 +94,7 @@ export class enemy extends Component {
         }
     }
     onHandleDestroy() {
-        this.enemyGroup.destoryNode(this.node);
+        this.enemyGroup.destoryNode(this.node, this.score);
     }
 
 }

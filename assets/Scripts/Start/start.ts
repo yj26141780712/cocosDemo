@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, director, Animation } from 'cc';
+import { _decorator, Component, Node, director, Animation, AudioSource, AudioClip } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
@@ -20,17 +20,21 @@ export class Start extends Component {
     @property({ type: Animation })
     public loadAnimation: Animation | null = null;
 
+    @property(AudioClip)
+    public btnSound: AudioClip;
+
+    @property(AudioSource)
+    public audioSource: AudioSource = null!;
+
     start() {
-        console.log('onload');
         this.loadAnimation.play();
         //预加载游戏
-        console.log('预加载游戏！');
         director.preloadScene('Game');
     }
 
 
     startGame() {
-        console.log('开始游戏！');
+        this.audioSource.playOneShot(this.btnSound);
         director.loadScene('Game');
     }
 

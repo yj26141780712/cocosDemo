@@ -1,7 +1,7 @@
 
-import { _decorator, Component, Animation, SystemEvent, EventTouch, Vec3, UITransform, TERRAIN_HEIGHT_BASE, Collider2D, Contact2DType, IPhysics2DContact, director } from 'cc';
+import { _decorator, Component, Animation, SystemEvent, EventTouch, Vec3, UITransform, TERRAIN_HEIGHT_BASE, Collider2D, Contact2DType, IPhysics2DContact, director, AudioClip } from 'cc';
 import { bulletGroup } from './bulletGroup';
-import { common } from './common';
+import { Main } from './main';
 
 const { ccclass, property } = _decorator;
 
@@ -32,8 +32,12 @@ export class Hero extends Component {
     @property({ type: Animation })
     public heroAnimation: Animation | null = null;
 
-    @property({ type: common })
-    public common: common | null = null;
+    @property({ type: Main })
+    public main: Main | null = null;
+
+
+    exploding = false;
+
 
     start() {
 
@@ -48,14 +52,18 @@ export class Hero extends Component {
     }
 
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        if (this.exploding) {
+            return;
+        }
         if (otherCollider.node.parent.name === 'ufoGroup') { // ufo
             if (otherCollider.node.name === 'doubleBullet') {
                 this.bulletGroup.changeBullte(otherCollider.node.name);
             }
             if (otherCollider.node.name === 'tnt') {
-                console.log('释放炸弹')
+                this.main.receiveBomb();
             }
         } else if (otherCollider.node.parent.name === 'enemyGroup') { // 敌人
+            this.exploding = true;
             this.heroAnimation.play('hero_exploding');
             this.heroAnimation.on(Animation.EventType.FINISHED, this.onHandleDestroy, this);
         }
@@ -79,8 +87,8 @@ export class Hero extends Component {
 
     onHandleDestroy() {
         this.offDrag();
-        this.common.clearPools();
-        director.loadScene('End');
+        console.log('gameover')
+        this.main.gameOver();
     }
     // update (deltaTime: number) {
     //     // [4]

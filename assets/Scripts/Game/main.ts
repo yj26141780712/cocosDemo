@@ -1,9 +1,12 @@
 
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Label, director, AudioClip } from 'cc';
 import { bulletGroup } from './bulletGroup';
+import { common } from './common';
 import { enemyGroup } from './enemyGroup';
 import { Hero } from './hero';
 import { ufoGroup } from './ufoGroup';
+import global from './global';
+
 const { ccclass, property } = _decorator;
 
 /**
@@ -39,13 +42,46 @@ export class Main extends Component {
     @property({ type: ufoGroup })
     public ufoGroup: ufoGroup | null = null;
 
+    @property({ type: common })
+    public common: common | null = null;
+
+    @property({ type: Label })
+    public scoreDisplay: Label | null = null;
+
+    @property({ type: Label })
+    public bombDisplay: Label | null = null;
+
+    @property(AudioClip)
+    public bgm: AudioClip | null = null;
+
+    @property(AudioClip)
+    public bombSound: AudioClip | null = null;
+
+
     start() {
         // [3]
-        this.enemyGroup.startAction();
+        // this.enemyGroup.startAction();
         this.bulletGroup.startAction();
         this.ufoGroup.startAction();
+        this.enemyGroup?.node.on('changeScore', this.onChangeScore, this);
     }
 
+    //接收炸弹
+    receiveBomb() {
+        this.common.bombAmount++;
+        this.bombDisplay.string = this.common.bombAmount.toString();
+    }
+
+    onChangeScore(score: number) {
+        this.common.score += score;
+        global.score = this.common.score;
+        this.scoreDisplay.string = this.common.score.toString();
+    }
+
+    gameOver() {
+        this.common.clearPools();
+        director.loadScene('End');
+    }
     // update (deltaTime: number) {
     //     // [4]
     // }
