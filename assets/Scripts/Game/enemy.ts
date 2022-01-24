@@ -1,5 +1,6 @@
 
-import { _decorator, Component, Collider2D, Contact2DType, IPhysics2DContact, Animation, UITransform, Sprite, SpriteFrame } from 'cc';
+import { _decorator, Component, Collider2D, Contact2DType, IPhysics2DContact, Animation, UITransform, Sprite, SpriteFrame, AudioClip, AudioSource } from 'cc';
+import { Main } from './main';
 const { ccclass, property } = _decorator;
 
 /**
@@ -42,6 +43,12 @@ export class enemy extends Component {
     @property({ type: SpriteFrame })
     public initSpriteFrame: SpriteFrame | null = null;
 
+    @property(AudioClip)
+    public clip:AudioClip|null = null;
+
+    @property(AudioSource)
+    public audioSource:AudioSource|null =null;
+
     public enemyGroup: any;
 
     enemyHp = 0;
@@ -80,6 +87,7 @@ export class enemy extends Component {
     }
 
     explodingAnim() {
+        this.audioSource.playOneShot(this.clip);
         this.enemyAnimation.play();
         this.enemyAnimation.on(Animation.EventType.FINISHED, this.onHandleDestroy, this);
     }

@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Label, director, AudioClip } from 'cc';
+import { _decorator, Component, Label, director, AudioClip, AudioSource, SpriteFrame, Button } from 'cc';
 import { bulletGroup } from './bulletGroup';
 import { common } from './common';
 import { enemyGroup } from './enemyGroup';
@@ -57,13 +57,44 @@ export class Main extends Component {
     @property(AudioClip)
     public bombSound: AudioClip | null = null;
 
+    @property(AudioClip)
+    public gameOverSound:AudioClip|null = null;
+
+    @property(AudioSource)
+    public audioSource: AudioSource | null = null;
+
+    @property(SpriteFrame)
+    public pauseSpriteFrame = [];
+
+    @property(Button)
+    public btnPause:Button|null =null;
 
     start() {
         // [3]
-        // this.enemyGroup.startAction();
+        this.enemyGroup.startAction();
         this.bulletGroup.startAction();
         this.ufoGroup.startAction();
         this.enemyGroup?.node.on('changeScore', this.onChangeScore, this);
+        this.audioSource.play();
+    }
+
+    onHandlePause() {
+        if (this.common.pause) {
+            this.btnPause.normalSprite = this.pauseSpriteFrame[0];
+            this.btnPause.pressedSprite = this.pauseSpriteFrame[1];
+            this.btnPause.hoverSprite = this.pauseSpriteFrame[1];
+            this.audioSource.play();
+            director.resume();
+            this.hero.onDrag();
+        } else {
+            this.btnPause.normalSprite = this.pauseSpriteFrame[2];
+            this.btnPause.pressedSprite = this.pauseSpriteFrame[3];
+            this.btnPause.hoverSprite = this.pauseSpriteFrame[3];
+            this.audioSource.stop();
+            director.pause();
+            this.hero.offDrag();
+        }
+        this.common.pause = !this.common.pause;
     }
 
     //接收炸弹
@@ -80,6 +111,7 @@ export class Main extends Component {
 
     gameOver() {
         this.common.clearPools();
+        this.audioSource.playOneShot(this.gameOverSound);
         director.loadScene('End');
     }
     // update (deltaTime: number) {

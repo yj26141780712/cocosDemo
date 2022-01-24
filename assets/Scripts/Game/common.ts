@@ -29,6 +29,7 @@ export class common extends Component {
     public pools = {};
     public score = 0;
     public bombAmount = 0;
+    public pause = false;
 
     start() {
         // [3]

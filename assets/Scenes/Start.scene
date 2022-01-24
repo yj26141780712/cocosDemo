@@ -581,7 +581,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "b89ea779-5466-4c4e-b53d-9ec4acddfd77@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
@@ -644,16 +644,16 @@
       "a": 255
     },
     "_normalSprite": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "b89ea779-5466-4c4e-b53d-9ec4acddfd77@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_hoverSprite": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "562a508d-40f1-41ea-8782-829089d3a104@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_pressedSprite": null,
     "_disabledSprite": {
-      "__uuid__": "951249e0-9f16-456d-8b85-a6ca954da16b@f9941",
+      "__uuid__": "562a508d-40f1-41ea-8782-829089d3a104@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_duration": 0.1,

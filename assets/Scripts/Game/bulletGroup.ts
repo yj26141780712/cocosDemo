@@ -1,9 +1,10 @@
 
-import { _decorator, Component, Node, Prefab, instantiate, Vec3, UITransform, NodePool, macro } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, Vec3, UITransform, NodePool, macro, AudioClip } from 'cc';
 import { bullet } from './bullet';
 import { common } from './common';
 import { finiteBullet, infiniteBullet } from './core';
 import { Hero } from './hero';
+import { Main } from './main';
 const { ccclass, property } = _decorator;
 
 /**
@@ -42,6 +43,12 @@ export class bulletGroup extends Component {
     @property({ type: common })
     public common: common | null = null;
 
+    @property(AudioClip)
+    public bulletSound:AudioClip|null =null;
+
+    @property(Main)
+    public main:Main|null = null;
+
     public nodePool: NodePool;
 
 
@@ -59,10 +66,13 @@ export class bulletGroup extends Component {
     }
 
     startShoot = () => {
+        this.main.audioSource.playOneShot(this.bulletSound);
         this.generateNewBullet(this.infiniteBullet);
+
     }
 
     startDoubleShoot = (i: number) => {
+        this.main.audioSource.playOneShot(this.bulletSound);
         this.generateNewBullet(this.finiteBullet[i]);
     }
 
